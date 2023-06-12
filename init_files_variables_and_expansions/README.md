@@ -1,0 +1,1 @@
+The script creates an alias named "ls" with the value "rm *". This means that whenever you execute the command "ls", it will actually execute "rm *".
