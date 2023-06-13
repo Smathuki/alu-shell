@@ -1,2 +1,2 @@
 #!/bin/bash
-printenv | grep -E '^declare -x' | sed 's/declare -x //'
+declare -p | awk -F= '/^declare -x/ {print $1}'
