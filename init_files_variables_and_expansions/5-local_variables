@@ -1,2 +1,2 @@
 #!/bin/bash
-declare -p | grep -Eo '^declare -x [A-Za-z_][A-Za-z0-9_]*' | cut -d ' ' -f 3
+{ declare -F +| declare -p | grep -Eo '^declare -(x|a) [A-Za-z_][A-Za-z0-9_]*' | cut -d ' ' -f 3; } | sort
