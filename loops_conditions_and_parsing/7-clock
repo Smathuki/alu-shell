@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#a nested loop to display a clock-like output
+#nested loop to print a clock-like output
 hours=0
 while ((hours <= 12))
 do
@@ -12,4 +12,3 @@ do
 	done
 	((hours++))
 done
-

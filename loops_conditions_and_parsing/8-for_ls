@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Displays the contents of the current directory in list format.
+# printing a formatted content of a directory
 for files in *
 do
 	name=$(echo "$files" | awk -F '-' '{print $2}')
