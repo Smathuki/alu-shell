@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#a nested loop to display a clock-like output
+hours=0
+while ((hours <= 12))
+do
+	min=1
+	echo "Hour: $hours"
+	while ((min <= 59))
+	do
+		echo "$min"
+		((min++))
+	done
+	((hours++))
+done
+

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Displays the contents of the current directory in list format.
+for files in *
+do
+	name=$(echo "$files" | awk -F '-' '{print $2}')
+	echo "$name"
+done
