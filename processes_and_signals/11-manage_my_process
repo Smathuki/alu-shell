@@ -22,7 +22,6 @@ killer() {
     if [[ $? -eq 0 ]]; then
         echo "Good"
     fi
-
 }
 
 if [[ "$1" == "start" ]]; then
