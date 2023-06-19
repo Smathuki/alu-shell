@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # This script displays the PID and process name of processes containing the word "bash"
-
+:'
 # Find processes using the proc filesystem
 for pid in /proc/*/; do
     pid=${pid%*/}
@@ -14,4 +14,5 @@ for pid in /proc/*/; do
         echo "PID: $pid, Process Name: $process_name"
     fi
 done
-
+'
+pgrep bash -l
