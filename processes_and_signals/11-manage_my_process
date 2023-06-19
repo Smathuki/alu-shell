@@ -1,43 +1,51 @@
-# Bash script to manage the "manage_my_process" script
-#
-# Usage:
-#   manage_my_process {start|stop|restart}
-#
-# When passed the argument `start`:
-#   - Starts the "manage_my_process" script
-#   - Creates a file containing its PID in "/var/run/my_process.pid"
-#   - Displays "manage_my_process started"
-#
-# When passed the argument `stop`:
-#   - Stops the "manage_my_process" script
-#   - Deletes the file "/var/run/my_process.pid"
-#   - Displays "manage_my_process stopped"
-#
-# When passing the argument `restart`:
-#   - Stops the "manage_my_process" script
-#   - Deletes the file "/var/run/my_process.pid"
-#   - Starts the "manage_my_process" script
-#   - Creates a file containing its PID in "/var/run/my_process.pid"
-#   - Displays "manage_my_process restarted"
-#
-# For any other argument, displays "Usage: manage_my_process {start|stop|restart}"
+#!/usr/bin/env bash
+# This script manages manage_my_process
 
-killer() {
-    kill "$(pgrep -f /manage_my_process)"; rm /var/run/my_process.pid
-}
-if [[ "$1" == "start" ]]
-then
-    ./manage_my_process &
-    echo "$$" > /var/run/my_process.pid
+PID_FILE="/var/run/my_process.pid"
+PROCESS_SCRIPT="manage_my_process"
+
+start_process() {
+    if [ -f "$PID_FILE" ]; then
+        echo "Process is already running."
+        exit 1
+    fi
+
+    ./"$PROCESS_SCRIPT" &
+    echo "$!" > "$PID_FILE"
     echo "manage_my_process started"
-elif [[ "$1" == "stop" ]]
-then
-    killer; echo "manage_my_process stopped"
-elif [[ "$1" == "restart" ]]
-then
-    killer; ./manage_my_process &
-    echo "$$" > /var/run/my_process.pid
+}
+
+stop_process() {
+    if [ ! -f "$PID_FILE" ]; then
+        echo "Process is not running."
+        exit 1
+    fi
+
+    pid=$(cat "$PID_FILE")
+    rm "$PID_FILE"
+    kill "$pid"
+    echo "manage_my_process stopped"
+}
+
+restart_process() {
+    stop_process
+    start_process
     echo "manage_my_process restarted"
-else
-    echo "Usage: manage_my_process {start|stop|restart}"
-fi
+}
+
+case "$1" in
+    start)
+        start_process
+        ;;
+    stop)
+        stop_process
+        ;;
+    restart)
+        restart_process
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
