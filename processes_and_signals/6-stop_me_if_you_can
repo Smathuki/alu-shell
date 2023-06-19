@@ -6,6 +6,10 @@ pid=$(pgrep -f "4-to_infinity_and_beyond")
 
 if [[ -n $pid ]]; then
     # Use the SIGINT signal to stop the process
-    pkill -INT -P "$pid"
+    pkill -INT -P "$pid" >/dev/null 2>&1
+else
+    echo "Process is not running"
+fi
+
    
 
