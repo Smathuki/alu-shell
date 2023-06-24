@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Get the PID of the process
-PID=$(ps -ef | grep 4-to_infinity_and_beyond | grep -v grep | awk '{print $2}')
+PID=$(pgrep -f "4-to_infinity_and_beyond")
 # Send the SIGTERM signal to the process
-kill -SIGTERM $PID
+kill -SIGTERM "$PID"
